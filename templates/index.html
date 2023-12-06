@@ -1,0 +1,257 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        #chat-messages {
+            height: 200px;
+            overflow-y: scroll;
+        }
+        #user-input {
+            width: 90%;
+            padding: 5px;
+            margin: 1em;
+        }
+        #user-side{
+            display: flex;
+        }
+        #button{
+            width: 8%;
+            margin: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <div id="user-side">
+            <input type="text" id="user-input" placeholder="Type your question...">
+            <button id="button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userQuery = document.getElementById('user-input').value;
+            appendMessage('You', userQuery, 'user');
+
+            // Call a function to send the user query to the backend and get the response
+            getBotResponse(userQuery);
+        }
+
+        function appendMessage(sender, message, type) {
+            var chatMessages = document.getElementById('chat-messages');
+            var messageDiv = document.createElement('div');
+            messageDiv.className = type;
+
+            if (type === 'user') {
+                messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            } else {
+                messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            }
+
+            chatMessages.appendChild(messageDiv);
+        }
+
+        function getBotResponse(userQuery) {
+            // Make an AJAX request to the backend
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:5000/ask', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+                    
+                    // Append the bot's response to the chat
+                    appendMessage('Chatbot', response.response, 'bot');
+                }
+            };
+
+            // Send the user query to the backend
+            xhr.send('user-query=' + encodeURIComponent(userQuery));
+        }
+    </script>
+</body>
+</html>
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@500&family=Work+Sans:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel=""/> -->
+    <title>Travel Chatbot</title>
+    <style>
+      * {
+        font-family: "Playpen Sans";
+        margin: 0em;
+        color: white;
+        padding: 0;
+        /* padding: 0;
+          border: 0; */
+      }
+      body {
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        overflow-y: hidden;
+      }
+      #chat-container {
+        width: 700px;
+        height: auto;
+        margin: auto;
+        border: 2px solid rgba(255, 255, 255, 0.093);
+        border-radius: 10px;
+        padding: 10px;
+      }
+      #chat-history {
+        height: 553px;
+        margin: 2em;
+        overflow-y: scroll;
+      }
+      #chat-history > * {
+        /* margin : 1em 0em; */
+        margin-bottom: 1.5em;
+      }
+      #user-input {
+        margin: 10px;
+        width: 95%;
+        display: flex;
+        justify-content: center;
+      }
+      input:focus {
+        outline: none;
+      }
+      #user_query {
+        width: 90%;
+        padding: 5px;
+        margin: 1em;
+        border-radius: 7px;
+        border-color: rgba(255, 255, 255, 0.166);
+        background-color: transparent;
+        color: white;
+        height: 2em;
+        padding: 0.7em 1.5em;
+      }
+      #subBut {
+        background: transparent;
+        border: none;
+      }
+      #subBut img {
+        height: 30px;
+        width: 30px;
+        display: block;
+      }
+      .navBar {
+        font-family: "Playpen Sans";
+        padding: 0.5em 2em;
+        height: 7.5vh;
+        display: flex;
+        align-items: center;
+        background-color: rgb(194, 130, 0);
+        letter-spacing: 2px;
+        font-weight: 500;
+        justify-content: center;
+      }
+      .box {
+        height: 92vh;
+        background-repeat: no-repeat;
+        background-image: radial-gradient(
+          circle 900px at 10% 10%,
+          rgb(43, 34, 0) 50%,
+          rgb(25, 19, 30) 90%
+        );
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navBar">
+      <h1>Travel Assistant</h1>
+    </div>
+    <div class="box">
+      <div id="chat-container">
+        <div id="chat-history">
+          <!-- Chat history will be displayed here -->
+        </div>
+        <div id="user-input">
+          <!-- <label for="user_query">Ask a question:</label> -->
+          <br />
+          <input
+            type="text"
+            name="user_query"
+            id="user_query"
+            placeholder="Type your question..."
+            required
+          />
+          <br />
+          <br />
+          <button onclick="submitUserQuery()" id="subBut">
+            <img src="https://i.ibb.co/xHNG4yJ/send-1.png" alt="Send" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- <a href="https://imgbb.com/"><img src="https://i.ibb.co/xHNG4yJ/send-1.png" alt="send-1" border="0"></a> -->
+
+    <script>
+      function submitUserQuery() {
+        var userQuery = document.getElementById("user_query").value;
+
+        // Display user query in the chat history
+        displayMessage("User", userQuery);
+
+        // // Display dummy bot response (for illustration purposes)
+        // var dummyBotResponse = "This is a dummy response for illustration.";
+        // displayMessage("Bot (Dummy)", dummyBotResponse);
+
+        // document.getElementById("user_query").value = "";
+        // Send user query to the backend
+        fetch("/get_response", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "user_query=" + encodeURIComponent(userQuery),
+        })
+          .then((response) => response.text())
+          .then((botResponse) => {
+            // Display actual bot response in the chat history
+            displayMessage("Assistant", botResponse);
+            document.getElementById("user_query").value = "";
+          });
+      }
+
+      function displayMessage(sender, message) {
+        var chatHistory = document.getElementById("chat-history");
+        var messageDiv = document.createElement("div");
+        messageDiv.innerHTML = "<strong>" + sender + " : </strong> " + message;
+        chatHistory.appendChild(messageDiv);
+
+        // Scroll to the bottom of the chat history
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
+    </script>
+  </body>
+</html>
