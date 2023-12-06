@@ -1,6 +1,6 @@
 # ChatGPT_Travel_Chatbot
 
-Problem
+## Problem
 
 There are three primary issues:  
 The front-end user interface client.  
@@ -8,7 +8,7 @@ The classification of query nature (general or database-based).
 The backend, which consists of a ChatGPT-based server and a database server.  
 
 
-Approach
+## Approach
 
 User Query:  
   User submits a query to the chatbot.  
@@ -29,7 +29,8 @@ Response to User:
 Web Interface:  
   Flask, ngrok, HTML, CSS, and JavaScript collectively create the user interface and handle the interaction.  
 
-Result
+## Result  
+
 There are two situations:  
 General Inquiry:  
 This covers general queries.  
